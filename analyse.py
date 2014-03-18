@@ -1,11 +1,16 @@
 import simplejson as json
 
-class Players:
+class Data:
 
     # Instantiate with path to json file
     def __init__(self, jsonfile):
-        f = open(jsonfile, 'r')
-        self.players = [Player(p) for p in json.load(f)]
+        #with open(csvfile, 'r') as f:
+        #    self.games = [Game(g) for g in csvfile.readlines(f)]
+        
+
+        with  open(jsonfile, 'r') as f:
+            self.players = [Player(p) for p in json.load(f)]
+
 
     # List all players
     def all(self):
@@ -36,7 +41,12 @@ class Player:
     def __init__(self, playerdict):
         self.fixtures = [Fixture(f) for f in
                 playerdict['fixture_history']['all']]
-        self.name = playerdict['web_name']
+        self.web_name = playerdict['web_name']
+        self.first_name = playerdict['first_name']
+        self.second_name = playerdict['second_name']
+        self.team_name = playerdict['team_name']
+
+
 
 class Fixture:
 
@@ -65,3 +75,8 @@ class Fixture:
         self.value = fixture[18]
         self.points = fixture[19]
 
+
+class Game:
+
+    def __init__(self, csvfile):
+        pass
