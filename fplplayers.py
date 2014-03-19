@@ -1,4 +1,5 @@
 import simplejson as json
+from games import Game
 
 class Data:
 
@@ -75,8 +76,3 @@ class Fixture:
         self.value = fixture[18]
         self.points = fixture[19]
 
-
-class Game:
-
-    def __init__(self, csvfile):
-        pass
