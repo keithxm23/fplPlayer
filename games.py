@@ -41,3 +41,6 @@ class Game:
 
     def __setattr__(self, name, value):
         raise "Game is a read-only class"
+
+    def __repr__(self):
+        return str(self.date)+' '+self.hometeam+' vs '+self.awayteam
