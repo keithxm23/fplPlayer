@@ -31,9 +31,15 @@ class Team:
         self.name = name
 
     def __eq__(self, other):
-        for names in self.TEAMS:
-            if self.name in names and other.name in names:
-                return True
+        if type(other) == type(self):
+            for names in self.TEAMS:
+                if self.name in names and other.name in names:
+                    return True
+        else:
+            for names in self.TEAMS:
+                if self.name in names and other in names:
+                    return True
+
         return False
 
     def __repr__(self):

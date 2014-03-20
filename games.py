@@ -14,7 +14,7 @@ class Games:
             self.games = [Game(row, header) for row in reader]
 
     def of_team(self, teamname):
-        return [g for g in self.games if teamname in [g.hometeam, g.awayteam]]
+        return [g for g in self.games if Team(teamname) in [g.hometeam, g.awayteam]]
 
 
     def of_team_at_home(self, teamname):
@@ -43,4 +43,4 @@ class Game:
         raise "Game is a read-only class"
 
     def __repr__(self):
-        return str(self.date)+' '+self.hometeam+' vs '+self.awayteam
+        return str(self.date)+' '+self.hometeam.name+' vs '+self.awayteam.name

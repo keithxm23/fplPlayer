@@ -14,6 +14,7 @@ class Data:
         with  open(jsonfile, 'r') as f:
             self.players = [Player(p) for p in json.load(f)]
 
+        self.teamfixturesdict = self.teamfixtures()
 
     # List all players
     def all(self):
@@ -35,9 +36,31 @@ class Data:
 
     # List players 'of' team xyz(ManU?)
     def of(self, team):
-        return [p for p in self.players if p['team_name'] == team]
+        return [p for p in self.players if p.team_name == team]
 
-
+    def teamfixtures(self):
+        teams = {}
+        teams['CHE'] = filter(lambda x: x.web_name == 'Cech', self.players)[0].fixtures
+        teams['ARS'] = filter(lambda x: x.web_name == 'Szczesny', self.players)[0].fixtures
+        teams['LIV'] = filter(lambda x: x.web_name == 'Mignolet', self.players)[0].fixtures
+        teams['NOR'] = filter(lambda x: x.web_name == 'Ruddy', self.players)[0].fixtures
+        teams['SUN'] = filter(lambda x: x.web_name == 'Westwood', self.players)[0].fixtures
+        teams['AVL'] = filter(lambda x: x.web_name == 'Guzan', self.players)[0].fixtures
+        teams['STK'] = filter(lambda x: x.web_name == 'Begovic', self.players)[0].fixtures
+        teams['EVE'] = filter(lambda x: x.web_name == 'Howard', self.players)[0].fixtures
+        teams['FUL'] = filter(lambda x: x.web_name == 'Stockdale', self.players)[0].fixtures
+        teams['SWA'] = filter(lambda x: x.web_name == 'Vorm', self.players)[0].fixtures
+        teams['MUN'] = filter(lambda x: x.web_name == 'De Gea', self.players)[0].fixtures
+        teams['SOU'] = filter(lambda x: x.web_name == 'Boruc', self.players)[0].fixtures
+        teams['WBA'] = filter(lambda x: x.web_name == 'Foster', self.players)[0].fixtures
+        teams['WHU'] = filter(lambda x: x.web_name == 'Henderson', self.players)[0].fixtures
+        teams['CAR'] = filter(lambda x: x.web_name == 'Marshall', self.players)[0].fixtures
+        teams['HUL'] = filter(lambda x: x.web_name == 'McGregor', self.players)[0].fixtures
+        teams['CRY'] = filter(lambda x: x.web_name == 'Speroni', self.players)[0].fixtures
+        teams['TOT'] = filter(lambda x: x.web_name == 'Lloris', self.players)[0].fixtures
+        teams['MCI'] = filter(lambda x: x.web_name == 'Hart', self.players)[0].fixtures
+        teams['NEW'] = filter(lambda x: x.web_name == 'Krul', self.players)[0].fixtures
+        return teams
 
 class Player:
 
