@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from team import Team
 
 class Games:
 
@@ -29,14 +30,14 @@ class Game:
 
     def __init__(self, row, header):
         for (key, value) in zip(header, row):
-            if key == 'Date':
-                val = datetime.strptime(value, '%d/%m/%y')
-            else:
-                try:
-                    val = float(value)
-                except ValueError:
-                    val = value
+            try:
+                val = float(value)
+            except ValueError:
+                val = value
             self.__dict__[''.join(e for e in key.lower() if e.isalnum())] = val
+        self.__dict__['date'] = datetime.strptime(self.date, '%d/%m/%y')
+        self.__dict__['hometeam'] = Team(self.hometeam)
+        self.__dict__['awayteam'] = Team(self.awayteam)
 
     def __setattr__(self, name, value):
         raise "Game is a read-only class"
