@@ -26,7 +26,8 @@ class Team:
 
     def __init__(self, name):
         if not any(name in names for names in self.TEAMS):
-            raise ValueError("Not a valid team name.")
+            errormsg = name+ " is not a valid team name."
+            raise ValueError(errormsg)
         self.name = name
 
     def __eq__(self, other):

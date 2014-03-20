@@ -31,7 +31,7 @@ class Game:
     def __init__(self, row, header):
         for (key, value) in zip(header, row):
             try:
-                val = float(value)
+                val = int(value)
             except ValueError:
                 val = value
             self.__dict__[''.join(e for e in key.lower() if e.isalnum())] = val
