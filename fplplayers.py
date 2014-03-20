@@ -58,7 +58,9 @@ class Fixture:
 
     def __init__(self, fixture, occured):
         self.occured = occured # whether fixture has occured or not 
-        self.date = fixture[0][:-5]
+        self.date = datetime.strptime(fixture[0][:-5].strip(),'%d %b')
+        yearval = 2013 if self.date.month > 7 else 2014
+        self.date = self.date.replace(year=yearval)
         if not self.occured:
             self.opponent = Team(fixture[2][:-4])
             self.gameweek = fixture[1].split()[1]
