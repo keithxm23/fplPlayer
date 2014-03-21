@@ -3,28 +3,37 @@ from games import Game
 from team import Team
 from datetime import datetime
 
-class Data:
+class Data():
 
     # Instantiate with path to json file
-    def __init__(self, jsonfile):
-        #with open(csvfile, 'r') as f:
-        #    self.games = [Game(g) for g in csvfile.readlines(f)]
-        
+    def __init__(self, feed):
+        if type(feed) is str:
+            with  open(feed, 'r') as f:
+                self.players = [Player(p) for p in json.load(f)]
+        elif type(feed) is list:
+            self.players = feed 
 
-        with  open(jsonfile, 'r') as f:
-            self.players = [Player(p) for p in json.load(f)]
 
-        self.fixturestoplay = dict([(key, filter(lambda f: not f.occured,
-            value)) for key, value in self.teamfixtures().items()])
-
-    # List all players
+# Methods that return players. Chainable!
+    # returns all players
     def all(self):
-        return self.players
+        return Data(self.players)
 
-    # Returns a set of all team names
+    # returns all current players
+    def current(self):
+        return Data(filter(lambda p: p.status in
+            ['a','d','s','i'],self.players))
+
+    # Return players 'of' team xyz(ManU?)
+    def of(self, team):
+        return Data([p for p in self.players if p.team_name == team])
+
+
+# Start of methods that do not return players
     def all_teams(self):
         return set([p['team_name'] for p in self.players])
     
+
     # Returns a set of all player status values
     ## a => available
     ## d => maybe injured
@@ -35,10 +44,9 @@ class Data:
     def all_statuses(self):
         return set([p['status'] for p in self.players])
 
-    # List players 'of' team xyz(ManU?)
-    def of(self, team):
-        return [p for p in self.players if p.team_name == team]
-
+    # Returns all the fixtures for every team
+    # NOTE: Only run on original Player set which is unfiltered. self.players
+    # should have players from every team for this method to work
     def teamfixtures(self):
         teams = {}
         teams['CHE'] = filter(lambda x: x.web_name == 'Cech', self.players)[0].fixtures
@@ -63,6 +71,10 @@ class Data:
         teams['NEW'] = filter(lambda x: x.web_name == 'Krul', self.players)[0].fixtures
         return teams
 
+    def fixturestoplay(self):
+        return dict([(key, filter(lambda f: not f.occured, value)) \
+                for key, value in self.teamfixtures().items()])
+
 class Player:
 
     def __init__(self, playerdict):
@@ -74,6 +86,7 @@ class Player:
         self.second_name = playerdict['second_name'].encode('utf-8')
         self.team_name = Team(playerdict['team_name'])
         self.fixtures.extend([Fixture(f, occured=False) for f in  playerdict['fixtures']['all'] if len(f[0]) > 2]) 
+        self.status = playerdict['status']
 
     def __repr__(self):
         return self.web_name

@@ -8,7 +8,7 @@ g = Games('E0.csv')
 predictedpoints = {}
 finalpoints = []
 currentpoints = []
-for team, fixtures in d.fixturestoplay.items():
+for team, fixtures in d.fixturestoplay().items():
     predictedpoints[team] = 0
     for f in fixtures:
         if f.playedat == 'A':
