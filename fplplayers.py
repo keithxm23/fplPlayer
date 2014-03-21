@@ -14,7 +14,8 @@ class Data:
         with  open(jsonfile, 'r') as f:
             self.players = [Player(p) for p in json.load(f)]
 
-        self.teamfixturesdict = self.teamfixtures()
+        self.fixturestoplay = dict([(key, filter(lambda f: not f.occured,
+            value)) for key, value in self.teamfixtures().items()])
 
     # List all players
     def all(self):

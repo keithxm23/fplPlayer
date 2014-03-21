@@ -35,12 +35,20 @@ class Game:
             except ValueError:
                 val = value
             self.__dict__[''.join(e for e in key.lower() if e.isalnum())] = val
-        self.__dict__['date'] = datetime.strptime(self.date, '%d/%m/%y')
-        self.__dict__['hometeam'] = Team(self.hometeam)
-        self.__dict__['awayteam'] = Team(self.awayteam)
+        self.date = datetime.strptime(self.date, '%d/%m/%y')
+        self.hometeam = Team(self.hometeam)
+        self.awayteam = Team(self.awayteam)
+        
+        if self.fthg > self.ftag:
+            self.homepoints = 3
+            self.awaypoints = 0
+        elif self.fthg == self.ftag:
+            self.homepoints = 1
+            self.awaypoints = 1
+        else:
+            self.homepoints = 0
+            self.awaypoints = 3
 
-    def __setattr__(self, name, value):
-        raise "Game is a read-only class"
 
     def __repr__(self):
         return str(self.date)+' '+self.hometeam.name+' vs '+self.awayteam.name
