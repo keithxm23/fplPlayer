@@ -49,6 +49,13 @@ class Game:
             self.homepoints = 0
             self.awaypoints = 3
 
+    def points_for(self, teamname):
+        if teamname == self.hometeam:
+            return self.homepoints
+        elif teamname == self.awayteam:
+            return self.awaypoints
+        else:
+            raise Exception(str(teamname)+" does not partake in this game")
 
     def __repr__(self):
         return str(self.date)+' '+self.hometeam.name+' vs '+self.awayteam.name
