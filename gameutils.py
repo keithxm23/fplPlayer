@@ -1,5 +1,6 @@
 # Utility functions to work with arrays of 'Games'
 
+# TODO: Refactor these functions as methods of the Game class
 def points(games, teamname):
     total_points = 0
     for g in games:

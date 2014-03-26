@@ -7,6 +7,8 @@ class Games:
 
     # TODO should be able to handle multiple csv files and
     # load them all to same self.games attribute
+    # TODO Use builder factory pattern so as to make methods chainable
+    #  that is the return type should also be of type Games()
     def __init__(self, csvfile):
         with open(csvfile, 'r') as f:
             reader = csv.reader(f)
