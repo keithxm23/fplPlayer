@@ -31,7 +31,7 @@ class Data():
 
 # Start of methods that do not return players
     def all_teams(self):
-        return set([p['team_name'] for p in self.players])
+        return set([p.team_name.name for p in self.players])
     
 
     # Returns a set of all player status values
@@ -42,7 +42,7 @@ class Data():
     ## s => suspended
     ## u => unavailable
     def all_statuses(self):
-        return set([p['status'] for p in self.players])
+        return set([p.status for p in self.players])
 
     # Returns all the fixtures for every team
     # NOTE: Only run on original Player set which is unfiltered. self.players
